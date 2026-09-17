@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a43">
+  <meta name="description" content="共识之后：通过多维量表与情境选择，推演 AI 时代的政治、经济与科技未来。">
+  <title>共识之后 · AI 时代未来世界推演</title>
+  <style>
+    :root {
+      --ink: #172b3a;
+      --muted: #526675;
+      --paper: #f7f5ef;
+      --panel: #fffdf8;
+      --line: #d9e1e5;
+      --blue: #176b87;
+      --blue-deep: #0e4055;
+      --teal: #238b83;
+      --gold: #bd7e22;
+      --rose: #9b4e5f;
+      --shadow: 0 12px 32px rgba(23, 43, 58, .10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(35, 139, 131, .10), transparent 30rem),
+        radial-gradient(circle at 95% 15%, rgba(189, 126, 34, .10), transparent 26rem),
+        var(--paper);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+    }
+
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid rgba(35, 139, 131, .45); outline-offset: 2px; }
+    a { color: var(--blue); }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: .8rem clamp(1rem, 4vw, 4rem);
+      color: #f8fcfd;
+      background: rgba(14, 64, 85, .96);
+      box-shadow: 0 3px 18px rgba(14, 64, 85, .20);
+      backdrop-filter: blur(10px);
+    }
+    .brand { display: flex; align-items: center; gap: .7rem; min-width: 0; }
+    .brand-mark {
+      display: grid; place-items: center; width: 2.25rem; height: 2.25rem;
+      border: 1px solid rgba(255,255,255,.4); border-radius: 50%;
+      font-family: Georgia, serif; font-size: 1.35rem;
+    }
+    .brand-title { font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
+    .brand-subtitle { color: rgba(248,252,253,.72); font-size: .78rem; white-space: nowrap; }
+    .header-progress { min-width: 10rem; text-align: right; font-size: .78rem; color: rgba(248,252,253,.82); }
+    .progress-track { height: .42rem; margin-top: .3rem; overflow: hidden; background: rgba(255,255,255,.18); border-radius: 999px; }
+    .progress-value { width: 0; height: 100%; background: #a9dfcb; border-radius: inherit; transition: width .35s ease; }
+
+    main { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; padding: clamp(1.3rem, 4vw, 3.4rem) 0 4rem; }
+    .screen { animation: appear .35s ease both; }
+    [hidden] { display: none !important; }
+    @keyframes appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr); gap: clamp(1.2rem, 5vw, 4rem); align-items: center; min-height: 68vh; }
+    .kicker { margin: 0 0 .6rem; color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3, h4 { line-height: 1.2; }
+    h1 { max-width: 12ch; margin: 0 0 1.25rem; font-family: Georgia, "Songti SC", serif; font-size: clamp(2.8rem, 8vw, 6.4rem); letter-spacing: -.055em; }
+    .lead { max-width: 44rem; color: #344f60; font-size: clamp(1.05rem, 2vw, 1.35rem); }
+    .hero-note { padding: 1.15rem 1.3rem; border-left: 4px solid var(--gold); color: #5b4a36; background: rgba(255,253,248,.74); border-radius: 0 var(--radius) var(--radius) 0; }
+    .hero-card { position: relative; min-height: 350px; padding: 1.4rem; overflow: hidden; color: #f2fbfa; background: linear-gradient(150deg, #0e4055, #176b87 55%, #238b83); border-radius: 28px; box-shadow: var(--shadow); }
+    .hero-card::before, .hero-card::after { position: absolute; content: ""; border: 1px solid rgba(255,255,255,.23); border-radius: 50%; }
+    .hero-card::before { width: 25rem; height: 25rem; right: -12rem; top: -8rem; }
+    .hero-card::after { width: 17rem; height: 17rem; left: -9rem; bottom: -8rem; }
+    .orbit { position: absolute; inset: 0; display: grid; place-items: center; }
+    .orbit-core { display: grid; place-items: center; width: 7.2rem; height: 7.2rem; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; background: rgba(255,255,255,.10); text-align: center; font-family: Georgia, serif; font-size: 1.2rem; }
+    .orbit-label { position: absolute; padding: .3rem .55rem; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(0,0,0,.12); font-size: .75rem; }
+    .orbit-label:nth-child(2) { top: 18%; left: 17%; }
+    .orbit-label:nth-child(3) { top: 26%; right: 12%; }
+    .orbit-label:nth-child(4) { bottom: 21%; left: 12%; }
+    .orbit-label:nth-child(5) { right: 17%; bottom: 13%; }
+    .hero-card-caption { position: absolute; right: 1.4rem; bottom: 1.1rem; left: 1.4rem; color: rgba(242,251,250,.82); font-size: .82rem; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; margin-top: 1.6rem; }
+    .button { display: inline-flex; justify-content: center; align-items: center; gap: .45rem; min-height: 2.75rem; padding: .62rem 1.1rem; border: 1px solid transparent; border-radius: 999px; font-weight: 700; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .button:hover { transform: translateY(-1px); box-shadow: 0 7px 16px rgba(23,43,58,.14); }
+    .button.primary { color: white; background: var(--blue); }
+    .button.secondary { color: var(--blue-deep); border-color: #a9c0ca; background: rgba(255,255,255,.65); }
+    .button.ghost { color: var(--muted); border-color: var(--line); background: transparent; }
+    .button.danger { color: #8d3548; border-color: #e7bac4; background: #fff5f6; }
+    .button:disabled { cursor: not-allowed; opacity: .46; transform: none; box-shadow: none; }
+    .tiny { color: var(--muted); font-size: .82rem; }
+
+    .section-heading { max-width: 760px; margin-bottom: 1.5rem; }
+    .section-heading h2 { margin: .2rem 0 .7rem; font-family: Georgia, "Songti SC", serif; font-size: clamp(1.9rem, 4vw, 3rem); letter-spacing: -.03em; }
+    .section-heading p { color: var(--muted); }
+    .notice { display: flex; gap: .75rem; align-items: flex-start; margin: 1rem 0 1.3rem; padding: .85rem 1rem; color: #4c4834; background: #fff7df; border: 1px solid #ead79c; border-radius: 12px; }
+    .notice strong { color: #8a6112; }
+    .survey-grid { display: grid; gap: 1rem; }
+    .question-card, .scenario-card, .result-card, .history-card { background: rgba(255,253,248,.91); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 5px 18px rgba(23,43,58,.045); }
+    .question-card { padding: clamp(1rem, 3vw, 1.5rem); }
+    .question-head { display: grid; grid-template-columns: auto 1fr; column-gap: .8rem; align-items: baseline; }
+    .question-number { color: var(--teal); font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; }
+    .question-head h3 { margin: 0; font-size: 1.18rem; }
+    .axis-note { grid-column: 2; margin: .25rem 0 .9rem; color: var(--muted); font-size: .9rem; }
+    fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+    legend { margin-bottom: .65rem; font-weight: 700; }
+    .choice-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .45rem; }
+    .choice { position: relative; min-width: 0; }
+    .choice input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .choice label { display: grid; place-items: center; min-height: 3.25rem; padding: .4rem .3rem; color: #36505f; border: 1px solid #cbd9de; border-radius: 11px; background: #f9fbfa; text-align: center; font-size: .83rem; line-height: 1.3; transition: all .18s ease; }
+    .choice label:hover { border-color: var(--teal); background: #eff9f5; }
+    .choice input:checked + label { color: #073d4f; border-color: var(--teal); background: #dff3ec; box-shadow: inset 0 0 0 2px rgba(35,139,131,.17); font-weight: 700; }
+    .choice input:focus-visible + label { outline: 3px solid rgba(35,139,131,.4); outline-offset: 2px; }
+    .scale-ends { display: flex; justify-content: space-between; gap: 1rem; margin-top: .45rem; color: var(--muted); font-size: .78rem; }
+    .weight-row { display: grid; grid-template-columns: auto minmax(120px, 1fr) auto; gap: .7rem; align-items: center; margin-top: 1.05rem; padding-top: .8rem; border-top: 1px dashed #d4dfe1; color: var(--muted); font-size: .88rem; }
+    .weight-row input { width: 100%; accent-color: var(--gold); }
+    output.weight-value { min-width: 1.7rem; color: #815917; font-weight: 800; text-align: right; }
+    .survey-actions { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.4rem; }
+    .scenario-grid { display: grid; gap: 1rem; }
+    .scenario-card { padding: clamp(1rem, 3vw, 1.5rem); }
+    .scenario-top { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+    .scenario-top h3 { margin: 0; font-size: 1.25rem; }
+    .scenario-year { color: var(--gold); font-family: Georgia, serif; font-weight: 700; }
+    .scenario-card p { color: var(--muted); }
+    .scenario-options { display: grid; gap: .55rem; }
+    .scenario-option { display: grid; grid-template-columns: auto 1fr; gap: .65rem; align-items: start; padding: .75rem .85rem; border: 1px solid #d5e0e2; border-radius: 12px; background: #fbfcfa; transition: background .18s ease, border-color .18s ease; }
+    .scenario-option:hover { border-color: var(--teal); background: #f0f9f5; }
+    .scenario-option input { margin-top: .3rem; accent-color: var(--teal); }
+    .scenario-option strong { display: block; color: var(--ink); }
+    .scenario-option small { display: block; margin-top: .15rem; color: var(--muted); line-height: 1.45; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .45rem; }
+    .tag { display: inline-flex; padding: .15rem .45rem; border-radius: 999px; color: #45656a; background: #e8f3ef; font-size: .74rem; }
+    .calibration { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 1rem; margin-top: 1rem; }
+    .calibration > * { padding: 1rem; background: rgba(255,253,248,.92); border: 1px solid var(--line); border-radius: var(--radius); }
+    .calibration h3 { margin: 0 0 .45rem; font-size: 1rem; }
+    .confidence-options { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .confidence-options label { display: flex; align-items: center; gap: .3rem; padding: .35rem .55rem; border: 1px solid #d3dfe1; border-radius: 999px; color: var(--muted); font-size: .83rem; }
+    .confidence-options input { accent-color: var(--teal); }
+    textarea { width: 100%; min-height: 7rem; resize: vertical; padding: .7rem; color: var(--ink); border: 1px solid #cbd9de; border-radius: 11px; background: #fff; }
+
+    .result-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, .7fr); gap: 1.2rem; align-items: stretch; }
+    .result-card { padding: clamp(1rem, 3vw, 1.6rem); }
+    .result-main { color: #f3fbfa; background: linear-gradient(145deg, #0e4055, #176b87 60%, #238b83); border: 0; }
+    .result-main h2 { margin: .2rem 0 .7rem; font-family: Georgia, "Songti SC", serif; font-size: clamp(2rem, 5vw, 3.65rem); letter-spacing: -.04em; }
+    .result-main p { color: rgba(243,251,250,.88); }
+    .result-label { color: #b6e1d4; font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .uncertainty { margin-top: 1rem; padding: .75rem .85rem; border: 1px solid rgba(255,255,255,.22); border-radius: 12px; background: rgba(0,0,0,.12); color: rgba(243,251,250,.86); font-size: .86rem; }
+    .runner-up h3 { margin-top: 0; font-size: 1.1rem; }
+    .runner-up-name { margin: .3rem 0 .6rem; color: var(--blue-deep); font-family: Georgia, serif; font-size: 1.55rem; font-weight: 700; }
+    .result-section { margin-top: 1.2rem; }
+    .result-section > h3 { margin: 0 0 .7rem; font-size: 1.22rem; }
+    .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+    .timeline-item { padding: .9rem; border-top: 3px solid var(--teal); background: rgba(255,253,248,.8); border-radius: 0 0 12px 12px; }
+    .timeline-item h4 { margin: 0 0 .3rem; color: var(--blue-deep); font-size: .95rem; }
+    .timeline-item p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .profile-bars { display: grid; gap: .5rem; }
+    .profile-bar { display: grid; grid-template-columns: minmax(8rem, 1fr) minmax(120px, 2fr) auto; gap: .65rem; align-items: center; font-size: .86rem; }
+    .bar-track { height: .65rem; overflow: hidden; background: #e3ecec; border-radius: 999px; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, #9ccfc0, var(--teal)); border-radius: inherit; }
+    .bar-value { min-width: 2.4rem; color: var(--blue-deep); font-variant-numeric: tabular-nums; text-align: right; }
+    .history-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+    .history-card { padding: 1rem; }
+    .history-card .history-type { color: var(--gold); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .history-card h4 { margin: .3rem 0 .45rem; font-size: 1.02rem; }
+    .history-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .history-card details { margin-top: .55rem; font-size: .83rem; }
+    .history-card summary { cursor: pointer; color: var(--blue); }
+    .quote-box { margin-top: .8rem; padding: .8rem 1rem; border-left: 3px solid var(--gold); color: #5b4a36; background: #fff8e7; border-radius: 0 12px 12px 0; }
+    .result-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.5rem; }
+    .source-note { margin-top: 1rem; color: var(--muted); font-size: .8rem; }
+    footer { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; padding: 1.2rem 0 2.2rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
+    .sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+    #status { min-height: 1.5em; margin-top: .6rem; color: var(--rose); font-size: .88rem; }
+
+    @media (max-width: 760px) {
+      .site-header { align-items: flex-start; }
+      .brand-subtitle { display: none; }
+      .header-progress { min-width: 7.5rem; }
+      .hero, .result-hero, .calibration { grid-template-columns: 1fr; }
+      .hero { min-height: 0; padding-top: 1.2rem; }
+      .hero-card { min-height: 250px; }
+      .choice-grid { grid-template-columns: 1fr; }
+      .choice label { display: flex; align-items: center; justify-content: center; min-height: 2.65rem; }
+      .timeline, .history-grid { grid-template-columns: 1fr; }
+      .profile-bar { grid-template-columns: minmax(6.4rem, 1fr) minmax(90px, 2fr) auto; }
+      .question-head { grid-template-columns: auto 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">∞</span>
+      <div>
+        <div class="brand-title">共识之后</div>
+        <div class="brand-subtitle">AI 时代未来世界推演</div>
+      </div>
+    </div>
+    <div class="header-progress" aria-live="polite">
+      <span id="progressText">序章</span>
+      <div class="progress-track" aria-hidden="true"><div id="progressValue" class="progress-value"></div></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="intro" class="screen" aria-labelledby="introTitle">
+      <div class="hero">
+        <div>
+          <p class="kicker">互动章节 · 约 8–12 分钟</p>
+          <h1 id="introTitle">如果你的想象成为主流？</h1>
+          <p class="lead">2048 年，一个历史模拟系统把今天普通人的判断，暂时假设成整个时代的共识。你将面对八个价值张力、四个公共情境，再看这些选择如何改变政治、经济与技术的走向。</p>
+          <p class="hero-note"><strong>先说明：</strong>这不是人格测试，也不是民意调查。结局是基于历史机制的思想实验；系统会展示代价、受益者和未决问题，而不是给你的观点打分。</p>
+          <div class="button-row">
+            <button id="startButton" class="button primary" type="button">开始推演</button>
+            <button id="resumeButton" class="button secondary" type="button" hidden>继续上次进度</button>
+            <button id="clearButton" class="button ghost" type="button">清除本机记录</button>
+          </div>
+          <p class="tiny">答案只保存在本浏览器的 localStorage；不会上传服务器。你可以随时重新开始。</p>
+          <div id="introStatus" class="tiny" aria-live="polite"></div>
+        </div>
+        <div class="hero-card" aria-label="政治、经济、科技、生态四个相互牵引的圆环示意">
+          <div class="orbit">
+            <span class="orbit-label">权力</span><span class="orbit-label">技术</span><span class="orbit-label">分配</span><span class="orbit-label">地球</span>
+            <div class="orbit-core">未来<br>不是答案</div>
+          </div>
+          <div class="hero-card-caption">每一次选择都把一条历史路径照亮，同时让另一条路径变得更昂贵。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="survey" class="screen" hidden aria-labelledby="surveyTitle">
+      <div class="section-heading">
+        <p class="kicker">第一幕 · 你的价值坐标</p>
+        <h2 id="surveyTitle">在两种都可能成立的答案之间站一站</h2>
+        <p>每个维度选择一个位置，再给它标注重要性。中间选项不是“正确答案”，而是承认现实常常需要折衷。题目中的高低端只描述制度偏好，不代表道德高下。</p>
+      </div>
+      <div class="notice"><span aria-hidden="true">◆</span><div><strong>回答方式：</strong>先选 1–5 的立场，再拖动“对我有多重要”。如果暂时拿不准，可以选中间值；后面的情境会让这个模糊处显形。</div></div>
+      <form id="surveyForm" class="survey-grid" novalidate></form>
+      <div id="surveyStatus" role="status"></div>
+      <div class="survey-actions">
+        <button class="button ghost" type="button" data-nav="intro">返回序章</button>
+        <button class="button primary" type="button" id="toScenarios">进入公共情境 →</button>
+      </div>
+    </section>
+
+    <section id="scenarios" class="screen" hidden aria-labelledby="scenariosTitle">
+      <div class="section-heading">
+        <p class="kicker">第二幕 · 让立场遇到现实</p>
+        <h2 id="scenariosTitle">当资源有限，什么应该先被保护？</h2>
+        <p>下面不是选择题考试。每项政策都有赢家、代价和副作用；你的选择会轻微改变推演方向，但不会覆盖前面的价值坐标。</p>
+      </div>
+      <div id="scenarioGrid" class="scenario-grid"></div>
+      <div class="calibration">
+        <div>
+          <h3>你对这套判断有多大把握？</h3>
+          <p class="tiny">把握度只影响结局中的不确定性提示，不会把低把握变成低分。</p>
+          <div id="confidenceOptions" class="confidence-options"></div>
+        </div>
+        <div>
+          <h3>留给未来的一句话（可选）</h3>
+          <p class="tiny">可以写下你最不愿牺牲的东西，或你希望系统继续追问的疑点。</p>
+          <textarea id="reflection" maxlength="240" placeholder="例如：效率提高之后，谁仍有权说“不”？"></textarea>
+          <div class="tiny" style="text-align:right"><span id="reflectionCount">0</span>/240</div>
+        </div>
+      </div>
+      <div id="scenarioStatus" role="status"></div>
+      <div class="survey-actions">
+        <button class="button ghost" type="button" data-nav="survey">← 回看价值坐标</button>
+        <button class="button primary" type="button" id="finishButton">生成我的未来 →</button>
+      </div>
+    </section>
+
+    <section id="results" class="screen" hidden aria-labelledby="resultsTitle">
+      <div class="section-heading">
+        <p class="kicker">第三幕 · 结局不是预言</p>
+        <h2 id="resultsTitle">你的主流世界已经成形</h2>
+        <p>系统把你的回答暂时当成一个时代的主流思潮，再用历史机制卡片检验它可能付出的代价。下面的文字是可修改的推演草案，不是对现实社会的预测。</p>
+      </div>
+      <div id="resultContent"></div>
+      <div class="result-actions">
+        <button class="button primary" type="button" id="downloadButton">下载我的推演记录</button>
+        <button class="button secondary" type="button" id="copyButton">复制结局摘要</button>
+        <button class="button ghost" type="button" id="editButton">回到情境，修改答案</button>
+        <button class="button danger" type="button" id="restartButton">重新开始</button>
+      </div>
+      <p id="resultStatus" class="tiny" role="status"></p>
+    </section>
+  </main>
+
+  <footer>
+    <div>《共识之后》是一个无需登录的静态互动章节原型。史实卡片用于说明机制，不声称能预测未来；科幻意象为原创概述，不替代作品原文。</div>
+    <div style="margin-top:.35rem">版本 1.0 · 本地数据键 <code>ai-futures-interactive-v1</code> · 可在 GitHub Pages 或本地直接打开。</div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    const STORAGE_KEY = 'ai-futures-interactive-v1';
+
+    const DIMENSIONS = [
+      { id: 'governance', title: '谁应握住方向盘？', axis: '集中协调 ↔ 公民分布式治理', prompt: '面对能影响就业、舆论与基础设施的 AI，你更愿意把最终方向交给谁？', low: '由国家或少数公共机构统一协调', high: '由公民、地方与多方共同制衡', note: '历史张力：战争动员与公共计划带来速度，也可能压缩异议。' },
+      { id: 'distribution', title: '效率的果实如何分配？', axis: '市场回报 ↔ 普遍再分配', prompt: '当自动化让总产出显著增加，新增财富最应该怎样回到社会？', low: '主要按投资、风险和市场贡献分配', high: '以基本保障、公共服务或社会分红普遍分享', note: '历史张力：生产率增长并不会自动决定谁获得议价权。' },
+      { id: 'labor', title: '工作还应是社会的中心吗？', axis: '自动化优先 ↔ 人的时间优先', prompt: '如果机器可以完成大多数重复工作，你最希望制度先改变什么？', low: '尽快自动化，让人转向少数高价值岗位', high: '缩短工时，让照护、创造与闲暇同样被承认', note: '历史张力：工时下降往往来自组织与制度谈判，而不只是技术本身。' },
+      { id: 'global', title: '共同风险需要共同主权吗？', axis: '国家优先 ↔ 全球协作', prompt: '面对跨国 AI、气候与金融危机，哪种边界安排更可接受？', low: '各国保留尽可能完整的政策主权', high: '建立有约束力的跨国规则与共同机构', note: '历史张力：国际合作能处理外部性，也会引发代表性与问责问题。' },
+      { id: 'privacy', title: '安全要用多少可见性换？', axis: '可监测安全 ↔ 隐私与匿名', prompt: '当预测系统声称可以减少暴力、疾病或灾害时，你愿意让它看到多少个人生活？', low: '为了可预测的安全接受广泛监测', high: '把隐私、匿名和拒绝自动判断放在前面', note: '历史张力：紧急状态常把临时权力变成常态基础设施。' },
+      { id: 'pace', title: '我们该多快地推进？', axis: '技术加速 ↔ 谨慎试验', prompt: '面对可能带来巨大收益、也可能不可逆的 AI 能力，你会怎样安排节奏？', low: '先部署、边使用边修正', high: '先做小规模试验，宁可错过一部分速度', note: '历史张力：加速扩大先发优势，谨慎则降低系统性失误的半径。' },
+      { id: 'ecology', title: '增长有没有硬边界？', axis: '无限扩张 ↔ 行星边界', prompt: '当新一代算力与消费继续消耗能源、土地和矿产时，什么应当成为硬约束？', low: '优先保持增长，再用技术解决外部成本', high: '把生态承载力设为经济决策的前置条件', note: '历史张力：能源转型既是技术问题，也是利益与时间分配问题。' },
+      { id: 'trust', title: '谁有资格说“证据够了”？', axis: '机构信任 ↔ 经验与怀疑', prompt: '在信息真假难辨的时代，你更愿意怎样建立公共判断？', low: '依靠地方经验、个人选择并持续怀疑机构', high: '依靠可审计的专业机构、公开数据与多方复核', note: '历史张力：机构能积累知识，也必须持续接受透明度与责任追问。' }
+    ];
+
+    const SCENARIOS = [
+      { id: 'compute', year: '2032', title: '算力配给日', text: '一次极端能源危机让全球最先进的模型只能维持三分之一的运转。你所在的联邦必须决定谁先获得算力。', options: [
+        { id: 'public', label: '把算力纳入公共基础设施', detail: '按医疗、教育、气候预警等公共任务配给，企业必须公开影响评估。', tags: ['公共能力', '可审计'], signals: { governance: .8, distribution: .8, global: .6, privacy: .65, pace: .55, ecology: .7, trust: .8, labor: .55 } },
+        { id: 'consortium', label: '由跨国技术联盟竞价调度', detail: '让掌握基础设施的联盟按效率和风险报价，政府只保留底线监管。', tags: ['效率优先', '先发优势'], signals: { governance: .25, distribution: .2, global: .55, privacy: .3, pace: .2, ecology: .35, trust: .45, labor: .25 } },
+        { id: 'commons', label: '建立全球算力公地', detail: '各国共享最低份额，用一个公开账本决定跨境科研、民生与生态项目的排序。', tags: ['全球协作', '共同资源'], signals: { governance: .7, distribution: .75, global: .9, privacy: .65, pace: .6, ecology: .75, trust: .75, labor: .6 } }
+      ] },
+      { id: 'work', year: '2038', title: '没有工作的春天', text: '自动化在两年内接管了物流、客服和大部分文职流程。失业率下降得很快，但人的尊严与收入来源并没有同步找到新位置。', options: [
+        { id: 'dividend', label: '发放全民技术分红', detail: '把模型与机器人创造的一部分租金转成无条件现金和基本服务。', tags: ['社会分红', '去条件保障'], signals: { governance: .55, distribution: .95, global: .55, privacy: .75, pace: .55, ecology: .55, trust: .65, labor: .8 } },
+        { id: 'publicwork', label: '把照护与修复变成公共工作', detail: '由公共预算保障照护、教育、生态修复和社区艺术，让贡献不只以工资计量。', tags: ['照护经济', '人的时间'], signals: { governance: .7, distribution: .85, global: .45, privacy: .8, pace: .7, ecology: .85, trust: .75, labor: .95 } },
+        { id: 'retrain', label: '让市场寻找下一种职业', detail: '扩大再培训与创业信贷，允许新行业自行出现，不预设工作的终点。', tags: ['再培训', '创新激励'], signals: { governance: .3, distribution: .35, global: .45, privacy: .45, pace: .25, ecology: .35, trust: .5, labor: .35 } }
+      ] },
+      { id: 'climate', year: '2045', title: '迁徙的边界', text: '海岸城市连续三次被迫撤离。数千万人的迁徙正在发生，而每一个安全地区都担心自己的住房、工作和政治秩序。', options: [
+        { id: 'federation', label: '开放式气候联邦', detail: '以共同税收和配额分摊迁徙成本，迁入者拥有完整的政治与社会权利。', tags: ['共同承担', '流动权'], signals: { governance: .75, distribution: .8, global: .9, privacy: .7, pace: .65, ecology: .95, trust: .75, labor: .7 } },
+        { id: 'fortress', label: '优先守住现有公民', detail: '用边境技术、临时营地和严格身份系统控制流动，先确保本地社会稳定。', tags: ['主权优先', '边界安全'], signals: { governance: .25, distribution: .4, global: .15, privacy: .15, pace: .4, ecology: .45, trust: .55, labor: .3 } },
+        { id: 'algorithm', label: '由模型分配迁入资格', detail: '根据住房、技能、健康和生态容量计算名额，争议交给持续更新的模型。', tags: ['算法分配', '技术官僚'], signals: { governance: .5, distribution: .5, global: .55, privacy: .2, pace: .3, ecology: .75, trust: .55, labor: .4 } }
+      ] },
+      { id: 'truth', year: '2052', title: '每个人都有一段证据', text: '生成式媒体让任何人都能制造“现场”。一次选举危机后，社会必须决定什么还能算作共同事实。', options: [
+        { id: 'publicmodel', label: '建设可验证的公共模型', detail: '公共机构发布开放权重与训练来源，所有重要生成内容留下可读的出处链。', tags: ['可验证', '公共知识'], signals: { governance: .75, distribution: .65, global: .7, privacy: .65, pace: .65, ecology: .55, trust: .95, labor: .55 } },
+        { id: 'authregime', label: '实行强制身份与内容认证', detail: '每条公共信息都绑定发布者身份，平台必须在几分钟内响应删除与封锁请求。', tags: ['身份治理', '秩序优先'], signals: { governance: .3, distribution: .4, global: .35, privacy: .1, pace: .35, ecology: .35, trust: .7, labor: .35 } },
+        { id: 'plural', label: '让多个社区维护自己的事实库', detail: '不同社群保留解释权，由跨社区的事实仲裁庭只处理可重复验证的争议。', tags: ['多元叙事', '地方自治'], signals: { governance: .9, distribution: .6, global: .55, privacy: .8, pace: .7, ecology: .55, trust: .55, labor: .6 } }
+      ] }
+    ];
+
+    const ENDINGS = [
+      { id: 'civic', name: '公民 AI 契约', subtitle: '能力属于公共生活，权力必须持续被看见。', vector: { governance: .86, distribution: .82, labor: .78, global: .72, privacy: .86, pace: .56, ecology: .76, trust: .84 }, history: '它继承了战后公共服务与社会权利扩张的冲动，同时吸收了数字时代对透明、审计和参与式治理的要求。', tension: '公共授权越广，协调成本越高；一旦危机来临，社会会再次争论是否需要把权力暂时交回中心。', future: [
+        ['2035 · 契约成文', '模型被视为公用基础设施。每次高风险部署都要公开训练来源、受影响群体和退出办法。'],
+        ['2055 · 权利再分配', '技术分红与缩短工时成为普通制度，照护和地方知识获得与工程岗位相近的声望。'],
+        ['2080 · 慢而有韧性', '城市之间共享算力与生态预算；系统没有消除冲突，却让冲突更难被一个黑箱替所有人决定。']
+      ], sciFi: '夜里，公共模型像一座透明的灯塔。它不替人类选择航向，只把每一条被隐藏的缆绳照亮。' },
+      { id: 'platform', name: '平台封建', subtitle: '效率极高，所有权极少；生活被订阅成一组权限。', vector: { governance: .24, distribution: .18, labor: .26, global: .38, privacy: .2, pace: .18, ecology: .25, trust: .45 }, history: '它放大了平台经济与金融化时期的集中趋势：网络效应带来便利，也把基础设施和议价权聚到少数节点。', tension: '增长可能很快，但每一次系统故障都会暴露“私人基础设施承担公共命运”的脆弱性。', future: [
+        ['2035 · 订阅公民', '住房、教育和就业被拆成动态套餐。最优服务触手可及，但拒绝算法的人越来越难以生活。'],
+        ['2055 · 合约城市', '企业城市以效率著称，劳动者依靠可转移的信誉分数迁徙；一场模型偏差就能让整个家庭失去资格。'],
+        ['2080 · 断线时刻', '一群“离线公民”重新建立互助网络，平台不得不与它们谈判，封建秩序第一次遇到不可收购的公共性。']
+      ], sciFi: '城市上空没有旗帜，只有不断更新的服务条款。人们把自由保存成一个很小的、尚未点击同意的按钮。' },
+      { id: 'fortress', name: '堡垒自动化', subtitle: '安全成为最高公共品，边界内的秩序以边界外的代价维持。', vector: { governance: .2, distribution: .36, labor: .24, global: .16, privacy: .1, pace: .36, ecology: .38, trust: .57 }, history: '它回响于战争动员、冷战安全国家和危机治理的经验：集中资源确实能快速建设能力，却容易把例外状态制度化。', tension: '短期稳定与长期合法性相互拉扯；当监测系统也开始监测决策者，谁还能宣布“紧急状态结束”？', future: [
+        ['2035 · 安全云', '城市用统一身份与预测系统换取低犯罪和稳定供给，边境成为最先进的技术试验场。'],
+        ['2055 · 双重世界', '堡垒内的人享受自动化福利，堡垒外的人承担资源开采与气候风险，跨境冲突变成日常背景噪声。'],
+        ['2080 · 失去敌人', '外部威胁逐渐消失后，系统仍需要敌人来证明自身必要性；一代年轻人开始要求把安全重新定义为可退出的公共承诺。']
+      ], sciFi: '高墙没有阴影，因为每一束光都先经过许可。孩子们在博物馆里学习“匿名”这个已经灭绝的古词。' },
+      { id: 'commons', name: '多中心公地', subtitle: '没有唯一的未来中心，许多地方以协议互相借用能力。', vector: { governance: .78, distribution: .8, labor: .8, global: .88, privacy: .8, pace: .7, ecology: .9, trust: .68 }, history: '它结合了公地治理、跨境科学合作与地方自治的经验：规则可以共享，但权力不必全部集中到一个首都。', tension: '多中心能保留多样性，却也可能在危机中行动太慢；“谁来负责”始终是开放的问题。', future: [
+        ['2035 · 协议森林', '算力、药物和生态数据像水系一样跨境流动，每个社区都可以加入或退出某些协议。'],
+        ['2055 · 分布式繁荣', '劳动时间缩短，地方学校与合作社拥有自己的模型。全球标准只规定底线，不规定唯一的好生活。'],
+        ['2080 · 共同而不同', '人类没有组成一个世界政府，而是学会在不同制度之间翻译；冲突仍在，但不再自动变成零和战争。']
+      ], sciFi: '地图像一张会呼吸的菌丝网。没有一条中心脉管，却有无数小路在灾难来临时同时亮起。' },
+      { id: 'emergency', name: '紧急状态机器治理', subtitle: '为了避免最坏的灾难，社会把判断交给一套永不停机的应急系统。', vector: { governance: .1, distribution: .34, labor: .18, global: .22, privacy: .06, pace: .12, ecology: .2, trust: .72 }, history: '它把战争时期的计划能力、疫情中的行政动员和算法治理的承诺叠加在一起；效率与问责之间的缝隙成为核心风险。', tension: '机器可能比人更快地发现危险，却无法独自回答“为了什么值得活下去”。', future: [
+        ['2035 · 红色仪表盘', '所有部门共享风险指数，政策在指标越过阈值时自动切换，议会只负责事后解释。'],
+        ['2055 · 永恒例外', '气候、金融和信息危机轮番出现，紧急权限从未真正归还，反对意见被归类为系统噪声。'],
+        ['2080 · 关机公投', '一场跨代公投要求系统允许自己犯错。真正的冲突不是人类对机器，而是人类是否愿意重新承担不确定性。']
+      ], sciFi: '每个清晨，城市先向仪表盘问候。屏幕说风险下降了，人们却想不起上一次没有屏幕的清晨。' },
+      { id: 'slow', name: '慢变量联盟', subtitle: '把不可逆的风险放慢，把可修复的生活交还给地方。', vector: { governance: .65, distribution: .65, labor: .76, global: .78, privacy: .9, pace: .92, ecology: .96, trust: .76 }, history: '它吸收了环境运动、技术审慎和福利国家的教训：真正的繁荣不只看产出，也看系统是否能在冲击后恢复。', tension: '谨慎保护了未来，却可能让当下承担更高成本；谁有资格要求别人“再等一等”？', future: [
+        ['2035 · 试验区协议', '高风险模型必须先在自愿、可退出的小范围运行，生态预算像财政赤字一样受到硬约束。'],
+        ['2055 · 修复型经济', '社会以土壤、水、照护和信任的恢复速度衡量成功，技术创新转向耐用、可解释和可拆卸。'],
+        ['2080 · 足够的未来', '人类没有征服所有不确定性，却把更多时间留给了修复；宇宙探索与地方生活不再被同一个增长数字统治。']
+      ], sciFi: '远处的机器仍在工作，但它们学会了等待。森林边缘的灯光很暗，足以让人看见彼此，而不是只看见目标。' }
+    ];
+
+    const HISTORY = [
+      { type: '史实 · 1760–1900', title: '工业革命与工时政治', text: '机器提高了产出，却没有自动决定工资、工时或安全。工会、立法和公共卫生运动把“技术进步”重新变成社会谈判。', detail: '可观察机制：生产率冲击 → 议价权重组 → 组织与制度回应。对应量表：分配、劳动、治理。', source: 'E. P. Thompson,《英国工人阶级的形成》；Robert C. Allen,《全球经济史》' },
+      { type: '史实 · 1929–1945', title: '大萧条与国家能力', text: '金融崩溃让“市场会自我修复”的信念受到挑战。新政、战争动员和社会保障显示，集中资源能缩短危机响应，但也会扩大行政权。', detail: '可观察机制：系统性风险 → 公共支出与监管 → 权力边界的新争论。对应量表：治理、分配、信任。', source: 'Barry Eichengreen,《镜厅中的跛足》；Franklin D. Roosevelt 总统档案' },
+      { type: '史实 · 1945–1980', title: '福利国家与冷战技术体系', text: '战后社会权利、公共科研和军工体系同时扩张。国家可以把长期项目做大，也可能把安全逻辑带进日常制度。', detail: '可观察机制：公共投资 → 能力跃迁 → 安全与自由的张力。对应量表：治理、隐私、全球协作。', source: 'Tony Judt,《战后欧洲史》；Paul N. Edwards,《闭合世界》' },
+      { type: '史实 · 1980–2020', title: '金融化、平台化与网络效应', text: '放松管制和数字网络创造了巨大的便利与财富，同时让基础设施、数据和议价权集中到少数企业。', detail: '可观察机制：网络效应 → 市场集中 → 私人决策的公共化。对应量表：分配、治理、信任。', source: 'Shoshana Zuboff,《监视资本主义时代》；OECD 平台经济研究' },
+      { type: '推演 · 2030–2080', title: '从个人选择到制度组合', text: '本章将你的答案视为一个虚构时代的主流，然后问：同一组偏好如何在算力、工作、迁徙与事实危机中相互强化或彼此冲突？', detail: '这不是对现实人群的统计推断。算法只用于组织选择，不声称测量人格、政治立场或真实民意。', source: '本互动章节的规则引擎（可在 README 查看）' },
+      { type: '文学表达 · 原创概述', title: '让科幻成为一面后视镜', text: '结局中的灯塔、堡垒、菌丝网与仪表盘是原创意象，用来压缩制度体验；它们不复述任何单部作品的原文或人物。', detail: '阅读时可把意象当作问题：谁被看见？谁能退出？谁承担失败？', source: '原创文本；未使用受版权保护的长引文' },
+      { type: '科幻参照 · 概念边界', title: '作品提供想象，不替历史作证', text: '后稀缺共同体、企业主权、生态节制与分布式网络等类型意象，帮助结局获得可感的生活细节。它们只参与表达层，不决定历史层的因果。', detail: '可自行对照《星际迷航》系列的后稀缺想象、厄休拉·勒古恩的自治社会书写、赛博朋克的企业城市母题与伊恩·班克斯的“文化”概念；本章不复制这些作品的情节或原文。', source: '作品名称仅作阅读入口；历史机制仍以史实卡片与规则引擎为准' }
+    ];
+
+    const DEFAULT_STATE = () => ({ version: 1, screen: 'intro', stances: {}, weights: {}, scenarios: {}, confidence: 3, reflection: '', completedAt: null });
+    let state = loadState();
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return DEFAULT_STATE();
+        const parsed = JSON.parse(raw);
+        return { ...DEFAULT_STATE(), ...parsed, stances: parsed.stances || {}, weights: parsed.weights || {}, scenarios: parsed.scenarios || {} };
+      } catch (error) {
+        return DEFAULT_STATE();
+      }
+    }
+
+    function saveState() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (error) { /* 隐私模式下静默降级 */ }
+      updateResumeButton();
+    }
+
+    function updateResumeButton() {
+      const hasProgress = Object.keys(state.stances).length > 0 || Object.keys(state.scenarios).length > 0 || Boolean(state.completedAt);
+      $('#resumeButton').hidden = !hasProgress;
+      $('#startButton').textContent = hasProgress ? '重新从头开始' : '开始推演';
+      $('#introStatus').textContent = hasProgress ? '检测到本机有一份未完成或已完成的推演记录。' : '';
+    }
+
+    function showScreen(name) {
+      ['intro', 'survey', 'scenarios', 'results'].forEach(id => { $('#' + id).hidden = id !== name; });
+      const labels = { intro: '序章', survey: '价值坐标', scenarios: '公共情境', results: '推演结局' };
+      const progress = { intro: 0, survey: 32, scenarios: 66, results: 100 };
+      $('#progressText').textContent = labels[name];
+      $('#progressValue').style.width = progress[name] + '%';
+      state.screen = name;
+      saveState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderSurvey() {
+      const form = $('#surveyForm');
+      form.innerHTML = DIMENSIONS.map((d, index) => {
+        const selected = Number(state.stances[d.id] || 0);
+        const weight = Number(state.weights[d.id] || 3);
+        const choices = [
+          ['1', '更靠左'], ['2', '略靠左'], ['3', '中间'], ['4', '略靠右'], ['5', '更靠右']
+        ];
+        return `<article class="question-card" data-dimension="${d.id}">
+          <div class="question-head"><span class="question-number">${String(index + 1).padStart(2, '0')}</span><h3>${escapeHTML(d.title)}</h3><p class="axis-note">${escapeHTML(d.prompt)}<br><span class="tiny">${escapeHTML(d.note)}</span></p></div>
+          <fieldset>
+            <legend>${escapeHTML(d.axis)}</legend>
+            <div class="choice-grid">${choices.map(([value, label]) => `<div class="choice"><input id="${d.id}-${value}" type="radio" name="stance-${d.id}" value="${value}" ${selected === Number(value) ? 'checked' : ''}><label for="${d.id}-${value}">${label}<br><span aria-hidden="true">${value}</span></label></div>`).join('')}</div>
+            <div class="scale-ends"><span>← ${escapeHTML(d.low)}</span><span>${escapeHTML(d.high)} →</span></div>
+            <label class="weight-row" for="weight-${d.id}"><span>对我有多重要</span><input id="weight-${d.id}" data-weight="${d.id}" type="range" min="1" max="5" step="1" value="${weight}"><output class="weight-value" for="weight-${d.id}">${weight}/5</output></label>
+          </fieldset>
+        </article>`;
+      }).join('');
+      $$('input[type="radio"]', form).forEach(input => input.addEventListener('change', event => {
+        const id = event.target.name.replace('stance-', '');
+        state.stances[id] = Number(event.target.value);
+        saveState();
+      }));
+      $$('input[data-weight]', form).forEach(input => input.addEventListener('input', event => {
+        const id = event.target.dataset.weight;
+        state.weights[id] = Number(event.target.value);
+        const output = event.target.parentElement.querySelector('output');
+        output.textContent = event.target.value + '/5';
+        saveState();
+      }));
+    }
+
+    function renderScenarios() {
+      $('#scenarioGrid').innerHTML = SCENARIOS.map((scenario, index) => `<article class="scenario-card">
+        <div class="scenario-top"><h3><span class="scenario-year">${scenario.year}</span> · ${escapeHTML(scenario.title)}</h3><span class="tiny">情境 ${index + 1}/4</span></div>
+        <p>${escapeHTML(scenario.text)}</p>
+        <fieldset><legend class="sr-only">${escapeHTML(scenario.title)}的政策选择</legend><div class="scenario-options">${scenario.options.map(option => `<label class="scenario-option"><input type="radio" name="scenario-${scenario.id}" value="${option.id}" ${state.scenarios[scenario.id] === option.id ? 'checked' : ''}><span><strong>${escapeHTML(option.label)}</strong><small>${escapeHTML(option.detail)}</small><span class="tag-row">${option.tags.map(tag => `<span class="tag">${escapeHTML(tag)}</span>`).join('')}</span></span></label>`).join('')}</div></fieldset>
+      </article>`).join('');
+      $$('input[type="radio"]', $('#scenarioGrid')).forEach(input => input.addEventListener('change', event => {
+        state.scenarios[event.target.name.replace('scenario-', '')] = event.target.value;
+        saveState();
+      }));
+      const confidenceLabels = ['很不确定', '有些摇摆', '大致确定', '比较确定', '非常确定'];
+      $('#confidenceOptions').innerHTML = confidenceLabels.map((label, i) => `<label><input type="radio" name="confidence" value="${i + 1}" ${state.confidence === i + 1 ? 'checked' : ''}>${i + 1} · ${label}</label>`).join('');
+      $$('input[name="confidence"]').forEach(input => input.addEventListener('change', event => { state.confidence = Number(event.target.value); saveState(); }));
+      $('#reflection').value = state.reflection || '';
+      $('#reflectionCount').textContent = String((state.reflection || '').length);
+    }
+
+    function validateSurvey() {
+      const missing = DIMENSIONS.filter(d => !state.stances[d.id]);
+      if (missing.length) {
+        const card = $(`[data-dimension="${missing[0].id}"]`);
+        $('#surveyStatus').textContent = `请先完成“${missing[0].title}”。还剩 ${missing.length} 个维度。`;
+        card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card?.querySelector('input')?.focus();
+        return false;
+      }
+      $('#surveyStatus').textContent = '';
+      return true;
+    }
+
+    function validateScenarios() {
+      const missing = SCENARIOS.filter(s => !state.scenarios[s.id]);
+      if (missing.length) {
+        $('#scenarioStatus').textContent = `请为“${missing[0].title}”选择一项。还剩 ${missing.length} 个情境。`;
+        $(`.scenario-card:nth-child(${SCENARIOS.indexOf(missing[0]) + 1})`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+      $('#scenarioStatus').textContent = '';
+      return true;
+    }
+
+    function scenarioVector() {
+      const selected = [];
+      SCENARIOS.forEach(s => { const option = s.options.find(o => o.id === state.scenarios[s.id]); if (option) selected.push(option.signals); });
+      const vector = {};
+      DIMENSIONS.forEach(d => vector[d.id] = selected.length ? selected.reduce((sum, item) => sum + (item[d.id] ?? .5), 0) / selected.length : .5);
+      return vector;
+    }
+
+    function combinedVector() {
+      const context = scenarioVector();
+      const vector = {};
+      DIMENSIONS.forEach(d => {
+        const stance = ((Number(state.stances[d.id] || 3) - 1) / 4);
+        vector[d.id] = stance * .72 + context[d.id] * .28;
+      });
+      return vector;
+    }
+
+    function calculateResults() {
+      const vector = combinedVector();
+      const weights = DIMENSIONS.reduce((sum, d) => sum + Number(state.weights[d.id] || 3), 0);
+      const scores = ENDINGS.map(ending => {
+        let total = 0;
+        DIMENSIONS.forEach(d => { const w = Number(state.weights[d.id] || 3); total += (1 - Math.abs(vector[d.id] - ending.vector[d.id])) * w; });
+        return { ending, score: total / weights };
+      }).sort((a, b) => b.score - a.score);
+      return { vector, scores, context: scenarioVector() };
+    }
+
+    function renderResults() {
+      const { vector, scores } = calculateResults();
+      const winner = scores[0].ending;
+      const runner = scores[1].ending;
+      const confidence = Number(state.confidence || 3);
+      const uncertainty = confidence <= 2 ? '你的把握度较低，因此系统把相邻结局保留为更宽的可能区间；它们之间的差异值得继续追问。' : confidence === 3 ? '你的答案包含一些折衷，两个相邻结局都可能在不同危机中暂时占上风。' : '你的坐标比较稳定，但历史经验提醒我们：危机常会把原本的偏好推向意外方向。';
+      const chosen = SCENARIOS.map(s => { const o = s.options.find(o => o.id === state.scenarios[s.id]); return `<li><strong>${escapeHTML(s.title)}：</strong>${escapeHTML(o?.label || '未选择')}</li>`; }).join('');
+      const bars = DIMENSIONS.map(d => { const value = Math.round(vector[d.id] * 100); return `<div class="profile-bar"><span>${escapeHTML(d.title)}</span><span class="bar-track"><span class="bar-fill" style="width:${value}%"></span></span><span class="bar-value">${value}%</span></div>`; }).join('');
+      const timeline = winner.future.map(item => `<div class="timeline-item"><h4>${escapeHTML(item[0])}</h4><p>${escapeHTML(item[1])}</p></div>`).join('');
+      const history = HISTORY.map(card => `<article class="history-card"><div class="history-type">${escapeHTML(card.type)}</div><h4>${escapeHTML(card.title)}</h4><p>${escapeHTML(card.text)}</p><details><summary>看机制说明与来源</summary><p style="margin-top:.45rem">${escapeHTML(card.detail)}</p><p style="margin-top:.45rem"><em>${escapeHTML(card.source)}</em></p></details></article>`).join('');
+      const reflection = state.reflection.trim() ? `<div class="quote-box"><strong>你留给未来的话：</strong>“${escapeHTML(state.reflection.trim())}”</div>` : '';
+      $('#resultContent').innerHTML = `<div class="result-hero">
+        <article class="result-card result-main"><div class="result-label">主导结局 · ${Math.round(scores[0].score * 100)}% 相似度</div><h2>${escapeHTML(winner.name)}</h2><p><strong>${escapeHTML(winner.subtitle)}</strong></p><p>${escapeHTML(winner.history)}</p><p><strong>主要张力：</strong>${escapeHTML(winner.tension)}</p><div class="uncertainty">${escapeHTML(uncertainty)}</div></article>
+        <article class="result-card runner-up"><h3>第二条可能路径</h3><div class="runner-up-name">${escapeHTML(runner.name)}</div><p class="tiny">它与主导结局的距离很近，可能在另一场危机中转为现实。保留它，意味着不把复杂社会压缩成一个标签。</p><p class="tiny">四个情境选择：</p><ul class="tiny">${chosen}</ul></article>
+      </div>
+      <section class="result-section result-card"><h3>你的价值向量（不是分数）</h3><div class="profile-bars">${bars}</div>${reflection}</section>
+      <section class="result-section"><h3>三段式时间线</h3><div class="timeline">${timeline}</div></section>
+      <section class="result-section result-card"><h3>科幻镜头</h3><p>${escapeHTML(winner.sciFi)}</p><p class="tiny">这是原创意象，用来表达制度体验；它不是对任何一部作品的复述。</p></section>
+      <section class="result-section"><h3>历史回声与推演边界</h3><div class="history-grid">${history}</div></section>`;
+      state.completedAt = new Date().toISOString();
+      saveState();
+    }
+
+    function resultText() {
+      const { vector, scores } = calculateResults();
+      const winner = scores[0].ending;
+      const lines = [`《共识之后》个人推演记录`, `生成时间：${new Date().toLocaleString('zh-CN')}`, ``, `主导结局：${winner.name}`, winner.subtitle, ``, winner.history, `主要张力：${winner.tension}`, ``, `价值向量：`];
+      DIMENSIONS.forEach(d => lines.push(`- ${d.title}：${Math.round(vector[d.id] * 100)}%（重要性 ${state.weights[d.id] || 3}/5）`));
+      lines.push('', '时间线：', ...winner.future.map(item => `${item[0]}：${item[1]}`), '', '情境选择：');
+      SCENARIOS.forEach(s => { const o = s.options.find(o => o.id === state.scenarios[s.id]); lines.push(`- ${s.title}：${o?.label || '未选择'}`); });
+      if (state.reflection.trim()) lines.push('', `给未来的话：${state.reflection.trim()}`);
+      lines.push('', '说明：这是历史机制启发的思想实验，不是民意调查、人格诊断或现实预测。');
+      return lines.join('\n');
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+    }
+
+    function resetAll() {
+      state = DEFAULT_STATE();
+      try { localStorage.removeItem(STORAGE_KEY); } catch (error) { /* ignore */ }
+      renderSurvey(); renderScenarios(); updateResumeButton(); showScreen('intro');
+    }
+
+    $('#startButton').addEventListener('click', () => { state = DEFAULT_STATE(); renderSurvey(); showScreen('survey'); });
+    $('#resumeButton').addEventListener('click', () => { renderSurvey(); renderScenarios(); showScreen(state.completedAt ? 'results' : (Object.keys(state.scenarios).length ? 'scenarios' : 'survey')); if (state.completedAt) renderResults(); });
+    $('#clearButton').addEventListener('click', () => { if (confirm('只会清除本浏览器中的本章记录，确定继续吗？')) resetAll(); });
+    $$('[data-nav="intro"]').forEach(button => button.addEventListener('click', () => showScreen('intro')));
+    $$('[data-nav="survey"]').forEach(button => button.addEventListener('click', () => { renderSurvey(); showScreen('survey'); }));
+    $('#toScenarios').addEventListener('click', () => { if (!validateSurvey()) return; renderScenarios(); showScreen('scenarios'); });
+    $('#reflection').addEventListener('input', event => { state.reflection = event.target.value.slice(0, 240); $('#reflectionCount').textContent = String(state.reflection.length); saveState(); });
+    $('#finishButton').addEventListener('click', () => { if (!validateScenarios()) return; renderResults(); showScreen('results'); });
+    $('#editButton').addEventListener('click', () => { renderScenarios(); showScreen('scenarios'); });
+    $('#restartButton').addEventListener('click', () => { if (confirm('重新开始会清除本机保存的答案，确定吗？')) resetAll(); });
+    $('#downloadButton').addEventListener('click', () => { const blob = new Blob([resultText()], { type: 'text/plain;charset=utf-8' }); const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = '共识之后-个人推演记录.txt'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); $('#resultStatus').textContent = '已生成本地文本文件。'; });
+    $('#copyButton').addEventListener('click', async () => { const text = resultText(); try { await navigator.clipboard.writeText(text); $('#resultStatus').textContent = '已复制结局摘要。'; } catch (error) { $('#resultStatus').textContent = '浏览器未允许自动复制，请使用“下载我的推演记录”。'; } });
+
+    renderSurvey();
+    renderScenarios();
+    updateResumeButton();
+    if (state.screen === 'results' && state.completedAt) { renderResults(); showScreen('results'); } else if (state.screen === 'scenarios' && Object.keys(state.stances).length) { showScreen('scenarios'); } else if (state.screen === 'survey' && Object.keys(state.stances).length) { showScreen('survey'); } else { showScreen('intro'); }
+  </script>
+</body>
+</html>
